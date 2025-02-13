@@ -1,7 +1,11 @@
 package com.social.model;
 
-import jakarta.persistence.Column;
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -11,28 +15,71 @@ import jakarta.persistence.Table;
 @Table(name="users")
 public class User {
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 //	Rename to firstName to myname
-	@Column(name="myname")
+//	@Column(name="myname")
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String password;
+	private String gender;
+	private List<Integer> followers = new ArrayList<>();
+	private List<Integer> followings = new ArrayList<>();
+	private List<Post> savedPost= new ArrayList<>();
 	
 //	Creating empty constructor
 	public User() {
 		
 	}
 
-	public User(Integer id, String firstName, String lastName, String email, String password) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.password = password;
-	}
+
 //	Creating getters and setters method
+
+	public User(Integer id, String firstName, String lastName, String email, String password, String gender,
+		List<Integer> followers, List<Integer> followings, List<Post> savedPost) {
+	super();
+	this.id = id;
+	this.firstName = firstName;
+	this.lastName = lastName;
+	this.email = email;
+	this.password = password;
+	this.gender = gender;
+	this.followers = followers;
+	this.followings = followings;
+	this.savedPost = savedPost;
+}
+
+
+	public List<Integer> getFollowers() {
+		return followers;
+	}
+
+
+	public void setFollowers(List<Integer> followers) {
+		this.followers = followers;
+	}
+
+
+	public List<Integer> getFollowings() {
+		return followings;
+	}
+
+
+	public void setFollowings(List<Integer> followings) {
+		this.followings = followings;
+	}
+
+
+	public String getGender() {
+		return gender;
+	}
+
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
 
 	public Integer getId() {
 		return id;
@@ -73,4 +120,15 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+
+	public List<Post> getSavedPost() {
+		return savedPost;
+	}
+
+
+	public void setSavedPost(List<Post> savedPost) {
+		this.savedPost = savedPost;
+	}
+	
 }
