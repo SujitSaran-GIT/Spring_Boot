@@ -23,14 +23,14 @@ public class PostController {
 	@Autowired
 	PostService postService;
 	
-	@PostMapping("/posts")
+	@PostMapping("/posts/user/{userId}")
 	public ResponseEntity<Post> createPost(@RequestBody Post post,@PathVariable Integer userId) throws Exception{
 		
 		Post createdPost = postService.createNewPost(post,userId);
 		return new ResponseEntity<>(createdPost,HttpStatus.ACCEPTED);
 	}
 	
-	@DeleteMapping("/posts/{postid}/user/{userId}")
+	@DeleteMapping("/posts/{postId}/user/{userId}")
 	public ResponseEntity<ApiResponse> deletePost(@PathVariable Integer postId,@PathVariable Integer userId) throws Exception{
 		String message = postService.deletePost(postId, userId);
 		ApiResponse res = new ApiResponse(message,true);
@@ -50,18 +50,18 @@ public class PostController {
 	}
 	
 	@GetMapping("/posts")
-	public ResponseEntity<List<Post>> findAllPost(@PathVariable Integer userId) throws Exception{
+	public ResponseEntity<List<Post>> findAllPost() throws Exception{
 		List<Post> posts = postService.findAllPost();
 		return new ResponseEntity<List<Post>>(posts,HttpStatus.OK);
 	}
 	
-	@PutMapping("/posts/{postid}/user/{userId}")
+	@PutMapping("/posts/save/{postId}/user/{userId}")
 	public ResponseEntity<Post> savePostHandler(@PathVariable Integer postId,@PathVariable Integer userId) throws Exception{
 		Post post = postService.savePost(postId, userId);
 		return new ResponseEntity<Post>(post,HttpStatus.ACCEPTED);
 	}
 	
-	@PutMapping("/posts/like/{postid}/user/{userId}")
+	@PutMapping("/posts/like/{postId}/user/{userId}")
 	public ResponseEntity<Post> likePostHandler(@PathVariable Integer postId,@PathVariable Integer userId) throws Exception{
 		Post post = postService.likePost(postId, userId);
 		return new ResponseEntity<Post>(post,HttpStatus.ACCEPTED);

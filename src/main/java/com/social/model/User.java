@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,6 +27,8 @@ public class User {
 	private String gender;
 	private List<Integer> followers = new ArrayList<>();
 	private List<Integer> followings = new ArrayList<>();
+	
+	@ManyToMany
 	private List<Post> savedPost= new ArrayList<>();
 	
 //	Creating empty constructor

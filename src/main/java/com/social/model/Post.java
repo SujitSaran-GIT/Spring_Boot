@@ -1,6 +1,6 @@
 package com.social.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Post {
@@ -17,12 +19,16 @@ public class Post {
 	private String caption;
 	private String image;
 	private String video;
+	
+	@ManyToOne
 	private User user;
+	
+	@OneToMany
 	private List<User> liked = new ArrayList<>();
-	private LocalDate createdAt;
+	private LocalDateTime createdAt;
 	
 	public Post(Integer id, String caption, String image, String video, User user, List<User> liked,
-			LocalDate createdAt) {
+			LocalDateTime createdAt) {
 		super();
 		this.id = id;
 		this.caption = caption;
@@ -69,10 +75,10 @@ public class Post {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public LocalDate getCreatedAt() {
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
-	public void setCreatedAt(LocalDate createdAt) {
+	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
 	public List<User> getLiked() {
