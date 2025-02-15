@@ -39,7 +39,7 @@ public class UserController {
 		return savedUser;
 	}
 	
-	@GetMapping("/users")
+	@GetMapping("/api/users")
 	public List<User> getUsers() {
 //		Creating an empty array list of users
 //		List<User> users = new ArrayList<>();
@@ -52,7 +52,7 @@ public class UserController {
 		return users;
 	}
 //	Get specific user data by id
-	@GetMapping("/users/{userId}")
+	@GetMapping("/api/users/{userId}")
 	public User getUserById(@PathVariable("userId") Integer id) throws Exception {
 //		Creating an empty array list of users
 //		User user1 = new User(1,"Sujit","Saran","sujitsaran16@gmail.com","Saran@20002");
@@ -70,7 +70,7 @@ public class UserController {
 	
 	
 //	Update anything in the user
-	@PutMapping("/users/{userId}")
+	@PutMapping("/api/users/{userId}")
 //	@Requestbody is used for retrieve the data from the database
 	public User updateUser(@RequestBody User user,@PathVariable Integer userId) throws Exception{
 //		Optional<User> user1 = userRepository.findById(userId);
@@ -113,14 +113,14 @@ public class UserController {
 //		return "User deleted successfully"+userId;
 //	}
 //	
-	@PutMapping("/users/follow/{userId1}/{userId2}")
+	@PutMapping("/api/users/follow/{userId1}/{userId2}")
 	public User followUserHandler(@PathVariable Integer userId1,@PathVariable Integer userId2) throws Exception {
 		User user = userService.followUser(userId1, userId2);
 		return user;
 	}
 	
 	
-	@GetMapping("/users/search")
+	@GetMapping("/api/users/search")
 	public List<User> searchUser(@RequestParam("query") String query){
 		List<User> users = userService.searchUser(query);
 		return users;
