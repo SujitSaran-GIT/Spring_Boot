@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -69,9 +70,9 @@ public class UserController {
 	
 	
 //	Update anything in the user
-	@PutMapping("/api/users/{userId}")
+	@PutMapping("/api/users")
 //	@Requestbody is used for retrieve the data from the database
-	public User updateUser(@RequestBody User user,@PathVariable Integer userId) throws Exception{
+	public User updateUser(@RequestHeader("Authorization")String jwt, @RequestBody User user) throws Exception{
 //		Optional<User> user1 = userRepository.findById(userId);
 ////		User user1 = new User(1,"Sujit","Saran","sujitsaran16@gmail.com","Saran@20002");
 //		if(user1.isEmpty()) {
@@ -94,8 +95,9 @@ public class UserController {
 //		if(user.getPassword()!=null) {
 //			oldUser.setPassword(user.getPassword());
 //		}
+		User reqUser = userService.findUserByJwt(jwt);
 //		
-		User updatedUser = userService.updateUser(user, userId);
+		User updatedUser = userService.updateUser(user, reqUser.getId());
 		return updatedUser;
 	}
 	
@@ -112,9 +114,10 @@ public class UserController {
 //		return "User deleted successfully"+userId;
 //	}
 //	
-	@PutMapping("/api/users/follow/{userId1}/{userId2}")
-	public User followUserHandler(@PathVariable Integer userId1,@PathVariable Integer userId2) throws Exception {
-		User user = userService.followUser(userId1, userId2);
+	@PutMapping("/api/users/follow/{userId2}")
+	public User followUserHandler(@RequestHeader("Authorization")String jwt, @PathVariable Integer userId2) throws Exception {
+		User reqUser = userService.findUserByJwt(jwt);
+		User user = userService.followUser(reqUser.getId(), userId2);
 		return user;
 	}
 	
@@ -125,7 +128,14 @@ public class UserController {
 		return users;
 	}
 	
-	
+	@GetMapping("/api/users/profile")
+	public User getUserFromToken(@RequestHeader("Authorization")String jwt) {
+		
+		User user = userService.findUserByJwt(jwt);
+		
+		user.setPassword(null);
+		return user;
+	}
 	
 	
 	
