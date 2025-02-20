@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.social.model.Post;
@@ -21,6 +22,7 @@ import com.social.services.PostService;
 import com.social.services.UserService;
 
 @RestController
+@RequestMapping("/api")
 public class PostController {
 	
 	@Autowired
@@ -29,7 +31,7 @@ public class PostController {
 	@Autowired
 	UserService userService;
 	
-	@PostMapping("/api/posts")
+	@PostMapping("/posts")
 	public ResponseEntity<Post> createPost(@RequestHeader("Authorization")String jwt, @RequestBody Post post) throws Exception{
 		
 		User reqUser = userService.findUserByJwt(jwt);
