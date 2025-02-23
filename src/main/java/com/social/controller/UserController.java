@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.social.exception.UserException;
 import com.social.model.User;
 import com.social.repository.UserRepository;
 import com.social.services.UserService;
@@ -53,7 +54,7 @@ public class UserController {
 	}
 //	Get specific user data by id
 	@GetMapping("/api/users/{userId}")
-	public User getUserById(@PathVariable("userId") Integer id) throws Exception {
+	public User getUserById(@PathVariable("userId") Integer id) throws UserException {
 //		Creating an empty array list of users
 //		User user1 = new User(1,"Sujit","Saran","sujitsaran16@gmail.com","Saran@20002");
 //		user1.setId(id);
@@ -72,7 +73,7 @@ public class UserController {
 //	Update anything in the user
 	@PutMapping("/api/users")
 //	@Requestbody is used for retrieve the data from the database
-	public User updateUser(@RequestHeader("Authorization")String jwt, @RequestBody User user) throws Exception{
+	public User updateUser(@RequestHeader("Authorization")String jwt, @RequestBody User user) throws UserException{
 //		Optional<User> user1 = userRepository.findById(userId);
 ////		User user1 = new User(1,"Sujit","Saran","sujitsaran16@gmail.com","Saran@20002");
 //		if(user1.isEmpty()) {
@@ -83,15 +84,15 @@ public class UserController {
 //		if(user.getFirstName()!=null) {
 //			oldUser.setFirstName(user.getFirstName());
 //		}
-////		
+//		
 //		if(user.getLastName()!=null) {
 //			oldUser.setLastName(user.getLastName());
 //		}
-////		
+//		
 //		if(user.getEmail()!=null) {
 //			oldUser.setEmail(user.getEmail());
 //		}
-////		
+//		
 //		if(user.getPassword()!=null) {
 //			oldUser.setPassword(user.getPassword());
 //		}
@@ -101,7 +102,7 @@ public class UserController {
 		return updatedUser;
 	}
 	
-	//	Delete anything in the user
+//		Delete anything in the user
 //	@DeleteMapping("/users/{userId}")
 //	public String deleteUser(@PathVariable("userId") Integer userId) throws Exception{
 //		Optional<User> user = userRepository.findById(userId);
@@ -115,12 +116,11 @@ public class UserController {
 //	}
 //	
 	@PutMapping("/api/users/follow/{userId2}")
-	public User followUserHandler(@RequestHeader("Authorization")String jwt, @PathVariable Integer userId2) throws Exception {
+	public User followUserHandler(@RequestHeader("Authorization")String jwt, @PathVariable Integer userId2) throws UserException {
 		User reqUser = userService.findUserByJwt(jwt);
 		User user = userService.followUser(reqUser.getId(), userId2);
 		return user;
 	}
-	
 	
 	@GetMapping("/api/users/search")
 	public List<User> searchUser(@RequestParam("query") String query){

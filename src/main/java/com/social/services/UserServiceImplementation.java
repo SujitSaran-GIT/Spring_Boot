@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.social.config.JwtProvider;
+import com.social.exception.UserException;
 import com.social.model.User;
 import com.social.repository.UserRepository;
 
@@ -31,14 +32,14 @@ public class UserServiceImplementation implements UserService{
 	}
 
 	@Override
-	public User findUserById(Integer userId) throws Exception{
+	public User findUserById(Integer userId) throws UserException{
 		// TODO Auto-generated method stub
 		Optional<User> user = userRepository.findById(userId);
 		
 		if(user.isPresent()) {
 			return user.get();
 		}
-		throw new Exception("User not exist with user id"+userId);
+		throw new UserException("User not exist with user id: "+userId);
 		
 	}
 
@@ -50,7 +51,7 @@ public class UserServiceImplementation implements UserService{
 	}
 
 	@Override
-	public User followUser(Integer reqUserId, Integer userId2) throws Exception {
+	public User followUser(Integer reqUserId, Integer userId2) throws UserException {
 		// TODO Auto-generated method stub
 		User reqUser = findUserById(reqUserId);
 		User user2 = findUserById(userId2);
@@ -64,12 +65,12 @@ public class UserServiceImplementation implements UserService{
 	}
 
 	@Override
-	public User updateUser(User user,Integer userId) throws Exception {
+	public User updateUser(User user,Integer userId) throws UserException {
 		// TODO Auto-generated method stub
 		Optional<User> user1 = userRepository.findById(userId);
 //		User user1 = new User(1,"Sujit","Saran","sujitsaran16@gmail.com","Saran@20002");
 		if(user1.isEmpty()) {
-			throw new Exception("User not exist with id"+userId);
+			throw new UserException("User not exist with id"+userId);
 		}
 		User oldUser = user1.get();
 		
